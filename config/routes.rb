@@ -3,11 +3,15 @@ Rails.application.routes.draw do
   devise_for :users
   
   # Root routes - authenticated users go to dashboard, others to login
-  authenticated :user do
-    root 'dashboard#index', as: :authenticated_root
+  devise_scope :user do
+    authenticated :user do
+      root 'dashboard#index', as: :authenticated_root
+    end
+    
+    unauthenticated do
+      root 'devise/sessions#new', as: :unauthenticated_root
+    end
   end
-  
-  root 'devise/sessions#new'
   
   # Dashboard
   get 'dashboard', to: 'dashboard#index', as: :dashboard

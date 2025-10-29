@@ -121,7 +121,7 @@
                     <%= product.current_stock %>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <%= number_to_currency(product.unit_price, unit: 'R$ ', separator: ',', delimiter: '.') %>
+                    <%= number_to_currency(product.selling_price, unit: 'R$ ', separator: ',', delimiter: '.') %>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm">
                     <% if product.active? %>

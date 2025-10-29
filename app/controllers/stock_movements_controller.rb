@@ -86,7 +86,7 @@ class StockMovementsController < ApplicationController
     require 'csv'
     
     CSV.generate(headers: true) do |csv|
-      csv << ['Date', 'Product', 'Type', 'Quantity', 'Unit Price', 'Total Value', 
+      csv << ['Date', 'Product', 'Type', 'Quantity', 'Unit Cost', 'Total Value',
               'Reason', 'User', 'Reference']
       
       stock_movements.each do |movement|
@@ -95,7 +95,7 @@ class StockMovementsController < ApplicationController
           movement.product.name,
           movement.movement_type,
           movement.quantity,
-          movement.unit_price,
+          movement.unit_cost,
           movement.total_value,
           movement.reason,
           movement.user.name,

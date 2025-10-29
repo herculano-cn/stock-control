@@ -113,7 +113,7 @@ class ProductsController < ApplicationController
   def product_params
     params.require(:product).permit(
       :sku, :name, :description, :category_id, :supplier_id,
-      :unit_price, :cost_price, :current_stock, :minimum_stock,
+      :selling_price, :cost_price, :current_stock, :minimum_stock,
       :maximum_stock, :unit_of_measure, :active
     )
   end
@@ -122,7 +122,7 @@ class ProductsController < ApplicationController
     require 'csv'
     
     CSV.generate(headers: true) do |csv|
-      csv << ['SKU', 'Name', 'Category', 'Supplier', 'Unit Price', 'Cost Price', 
+      csv << ['SKU', 'Name', 'Category', 'Supplier', 'Selling Price', 'Cost Price',
               'Current Stock', 'Minimum Stock', 'Unit of Measure', 'Active']
       
       products.each do |product|
@@ -131,7 +131,7 @@ class ProductsController < ApplicationController
           product.name,
           product.category.name,
           product.supplier.name,
-          product.unit_price,
+          product.selling_price,
           product.cost_price,
           product.current_stock,
           product.minimum_stock,
