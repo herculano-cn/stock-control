@@ -1,0 +1,134 @@
+<%= simple_form_for @product, html: { class: 'space-y-6' } do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="bg-white shadow rounded-lg p-6 space-y-6">
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Informações Básicas</h3>
+    
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div>
+        <%= f.input :sku,
+                    label: 'SKU',
+                    required: true,
+                    autofocus: true,
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', placeholder: 'Ex: PROD-001' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div>
+        <%= f.input :name,
+                    label: 'Nome',
+                    required: true,
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div>
+        <%= f.association :category,
+                          label: 'Categoria',
+                          collection: @categories,
+                          prompt: 'Selecione uma categoria',
+                          required: true,
+                          input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' },
+                          wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div>
+        <%= f.association :supplier,
+                          label: 'Fornecedor',
+                          collection: @suppliers,
+                          prompt: 'Selecione um fornecedor',
+                          required: true,
+                          input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' },
+                          wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div class="sm:col-span-2">
+        <%= f.input :description,
+                    label: 'Descrição',
+                    as: :text,
+                    input_html: { rows: 3, class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white shadow rounded-lg p-6 space-y-6">
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Preços</h3>
+    
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div>
+        <%= f.input :cost_price,
+                    label: 'Preço de Custo',
+                    as: :decimal,
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', step: '0.01', min: '0' },
+                    wrapper_html: { class: 'space-y-1' },
+                    hint: 'Preço de compra do produto' %>
+      </div>
+
+      <div>
+        <%= f.input :selling_price,
+                    label: 'Preço de Venda',
+                    as: :decimal,
+                    required: true,
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', step: '0.01', min: '0' },
+                    wrapper_html: { class: 'space-y-1' },
+                    hint: 'Preço de venda do produto' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white shadow rounded-lg p-6 space-y-6">
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Estoque</h3>
+    
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <div>
+        <%= f.input :current_stock,
+                    label: 'Estoque Atual',
+                    as: :integer,
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', min: '0' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div>
+        <%= f.input :minimum_stock,
+                    label: 'Estoque Mínimo',
+                    as: :integer,
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', min: '0' },
+                    wrapper_html: { class: 'space-y-1' },
+                    hint: 'Alerta quando atingir este valor' %>
+      </div>
+
+      <div>
+        <%= f.input :maximum_stock,
+                    label: 'Estoque Máximo',
+                    as: :integer,
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', min: '0' },
+                    wrapper_html: { class: 'space-y-1' },
+                    hint: 'Opcional' %>
+      </div>
+
+      <div>
+        <%= f.input :unit_of_measure,
+                    label: 'Unidade de Medida',
+                    collection: Product.unit_of_measures.keys.map { |k| [k.humanize, k] },
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div class="sm:col-span-2">
+        <%= f.input :active,
+                    label: 'Ativo',
+                    as: :boolean,
+                    wrapper_html: { class: 'flex items-center' } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end space-x-3">
+    <%= link_to 'Cancelar', products_path, class: 'rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' %>
+    <%= f.button :submit, 
+                 @product.new_record? ? 'Criar Produto' : 'Atualizar Produto',
+                 class: 'rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' %>
+  </div>
+<% end %>

@@ -1,0 +1,60 @@
+<%= simple_form_for @supplier, html: { class: 'space-y-6' } do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="bg-white shadow rounded-lg p-6 space-y-6">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div>
+        <%= f.input :name,
+                    label: 'Nome',
+                    required: true,
+                    autofocus: true,
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div>
+        <%= f.input :cnpj,
+                    label: 'CNPJ',
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', placeholder: '00.000.000/0000-00' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div>
+        <%= f.input :email,
+                    label: 'Email',
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', type: 'email' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+
+      <div>
+        <%= f.input :phone,
+                    label: 'Telefone',
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', placeholder: '(00) 00000-0000' },
+                    wrapper_html: { class: 'space-y-1' } %>
+      </div>
+    </div>
+
+    <div>
+      <%= f.input :address,
+                  label: 'Endereço',
+                  as: :text,
+                  input_html: { rows: 3, class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' },
+                  wrapper_html: { class: 'space-y-1' } %>
+    </div>
+
+    <div>
+      <%= f.input :active,
+                  label: 'Ativo',
+                  as: :boolean,
+                  wrapper_html: { class: 'flex items-center' } %>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-end space-x-3">
+    <%= link_to 'Cancelar', suppliers_path, class: 'rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' %>
+    <%= f.button :submit, 
+                 @supplier.new_record? ? 'Criar Fornecedor' : 'Atualizar Fornecedor',
+                 class: 'rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' %>
+  </div>
+<% end %>

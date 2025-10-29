@@ -1,0 +1,14 @@
+<% content_for :title, "Editar Produto - Stock Control" %>
+
+<div class="space-y-6">
+  <div>
+    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+      Editar Produto
+    </h2>
+    <p class="mt-2 text-sm text-gray-700">
+      Atualize os dados do produto <%= @product.name %>.
+    </p>
+  </div>
+
+  <%= render 'form' %>
+</div>

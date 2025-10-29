@@ -1,0 +1,142 @@
+<% content_for :title, "Movimentação ##{@stock_movement.id} - Stock Control" %>
+
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="md:flex md:items-center md:justify-between">
+    <div class="min-w-0 flex-1">
+      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+        Movimentação #<%= @stock_movement.id %>
+      </h2>
+      <p class="mt-1 text-sm text-gray-500">
+        <%= l(@stock_movement.movement_date, format: :long) %>
+      </p>
+    </div>
+    <div class="mt-4 flex space-x-3 md:ml-4 md:mt-0">
+      <%= link_to 'Voltar', stock_movements_path, class: 'inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' %>
+      <%= link_to 'Ver Produto', product_path(@stock_movement.product), class: 'inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500' %>
+    </div>
+  </div>
+
+  <!-- Movement Details -->
+  <div class="bg-white shadow rounded-lg overflow-hidden">
+    <div class="px-4 py-5 sm:p-6">
+      <h3 class="text-lg font-medium leading-6 text-gray-900 mb-6">Detalhes da Movimentação</h3>
+      
+      <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Produto</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <%= link_to @stock_movement.product.name, product_path(@stock_movement.product), class: 'text-indigo-600 hover:text-indigo-900 font-semibold' %>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">SKU</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @stock_movement.product.sku %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Tipo de Movimentação</dt>
+          <dd class="mt-1">
+            <% 
+              badge_class = case @stock_movement.movement_type
+              when 'entry'
+                'bg-green-100 text-green-800'
+              when 'exit'
+                'bg-red-100 text-red-800'
+              when 'adjustment'
+                'bg-yellow-100 text-yellow-800'
+              when 'return'
+                'bg-blue-100 text-blue-800'
+              end
+            %>
+            <span class="inline-flex rounded-full px-3 py-1 text-sm font-semibold <%= badge_class %>">
+              <%= @stock_movement.movement_type.humanize %>
+            </span>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Data da Movimentação</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= l(@stock_movement.movement_date, format: :long) %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Quantidade</dt>
+          <dd class="mt-1 text-2xl font-bold text-gray-900"><%= @stock_movement.quantity %></dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Preço Unitário</dt>
+          <dd class="mt-1 text-sm text-gray-900">
+            <%= @stock_movement.unit_cost.present? ? number_to_currency(@stock_movement.unit_cost, unit: 'R$ ', separator: ',', delimiter: '.') : 'Not informed' %>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Valor Total</dt>
+          <dd class="mt-1 text-2xl font-bold text-green-600">
+            <%= number_to_currency(@stock_movement.total_value || 0, unit: 'R$ ', separator: ',', delimiter: '.') %>
+          </dd>
+        </div>
+
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Usuário Responsável</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @stock_movement.user.name %></dd>
+        </div>
+
+        <% if @stock_movement.reference_number.present? %>
+          <div>
+            <dt class="text-sm font-medium text-gray-500">Número de Referência</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @stock_movement.reference_number %></dd>
+          </div>
+        <% end %>
+
+        <% if @stock_movement.reason.present? %>
+          <div class="<%= @stock_movement.reference_number.present? ? '' : 'sm:col-span-2' %>">
+            <dt class="text-sm font-medium text-gray-500">Motivo</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @stock_movement.reason %></dd>
+          </div>
+        <% end %>
+
+        <% if @stock_movement.notes.present? %>
+          <div class="sm:col-span-2">
+            <dt class="text-sm font-medium text-gray-500">Observações</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= simple_format(@stock_movement.notes) %></dd>
+          </div>
+        <% end %>
+
+        <div class="sm:col-span-2 pt-4 border-t border-gray-200">
+          <dt class="text-sm font-medium text-gray-500">Registrado em</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= l(@stock_movement.created_at, format: :long) %></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Product Current Stock Info -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3 flex-1">
+        <h3 class="text-sm font-medium text-blue-800">Estoque Atual do Produto</h3>
+        <div class="mt-2 text-sm text-blue-700">
+          <p>
+            O produto <strong><%= @stock_movement.product.name %></strong> possui atualmente 
+            <strong class="<%= @stock_movement.product.current_stock <= @stock_movement.product.minimum_stock ? 'text-red-600' : 'text-green-600' %>">
+              <%= @stock_movement.product.current_stock %>
+            </strong> 
+            unidades em estoque.
+            <% if @stock_movement.product.current_stock <= @stock_movement.product.minimum_stock %>
+              <span class="text-red-600 font-semibold">⚠️ Estoque abaixo do mínimo!</span>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

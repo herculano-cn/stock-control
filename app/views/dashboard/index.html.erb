@@ -1,0 +1,166 @@
+<% content_for :title, "Dashboard - Stock Control" %>
+
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="md:flex md:items-center md:justify-between">
+    <div class="min-w-0 flex-1">
+      <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+        Dashboard
+      </h2>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <!-- Total Products -->
+    <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <dt class="truncate text-sm font-medium text-gray-500">Total de Produtos</dt>
+      <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><%= @total_products %></dd>
+    </div>
+
+    <!-- Low Stock Products -->
+    <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <dt class="truncate text-sm font-medium text-gray-500">Estoque Baixo</dt>
+      <dd class="mt-1 text-3xl font-semibold tracking-tight text-red-600">
+        <%= @low_stock_products %>
+        <% if @low_stock_products > 0 %>
+          <%= link_to 'Ver', low_stock_products_path, class: 'ml-2 text-sm font-normal text-indigo-600 hover:text-indigo-500' %>
+        <% end %>
+      </dd>
+    </div>
+
+    <!-- Out of Stock -->
+    <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <dt class="truncate text-sm font-medium text-gray-500">Sem Estoque</dt>
+      <dd class="mt-1 text-3xl font-semibold tracking-tight text-red-800"><%= @out_of_stock_products %></dd>
+    </div>
+
+    <!-- Total Stock Value -->
+    <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <dt class="truncate text-sm font-medium text-gray-500">Valor Total do Estoque</dt>
+      <dd class="mt-1 text-3xl font-semibold tracking-tight text-green-600">
+        <%= number_to_currency(@total_stock_value, unit: 'R$ ', separator: ',', delimiter: '.') %>
+      </dd>
+    </div>
+  </div>
+
+  <!-- Additional Stats -->
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <!-- Categories and Suppliers -->
+    <div class="overflow-hidden rounded-lg bg-white shadow">
+      <div class="px-4 py-5 sm:p-6">
+        <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Resumo do Sistema</h3>
+        <dl class="space-y-3">
+          <div class="flex justify-between">
+            <dt class="text-sm font-medium text-gray-500">Categorias Ativas</dt>
+            <dd class="text-sm font-semibold text-gray-900"><%= @total_categories %></dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-sm font-medium text-gray-500">Fornecedores Ativos</dt>
+            <dd class="text-sm font-semibold text-gray-900"><%= @total_suppliers %></dd>
+          </div>
+        </dl>
+        <div class="mt-4 flex space-x-3">
+          <%= link_to 'Ver Categorias', categories_path, class: 'text-sm font-medium text-indigo-600 hover:text-indigo-500' %>
+          <%= link_to 'Ver Fornecedores', suppliers_path, class: 'text-sm font-medium text-indigo-600 hover:text-indigo-500' %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="overflow-hidden rounded-lg bg-white shadow">
+      <div class="px-4 py-5 sm:p-6">
+        <h3 class="text-lg font-medium leading-6 text-gray-900 mb-4">Ações Rápidas</h3>
+        <div class="space-y-3">
+          <% if policy(Product).create? %>
+            <%= link_to new_product_path, class: 'flex items-center justify-between rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500' do %>
+              <span>Novo Produto</span>
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            <% end %>
+          <% end %>
+          
+          <% if policy(StockMovement).create? %>
+            <%= link_to new_stock_movement_path, class: 'flex items-center justify-between rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500' do %>
+              <span>Nova Movimentação</span>
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+              </svg>
+            <% end %>
+          <% end %>
+          
+          <%= link_to products_path, class: 'flex items-center justify-between rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500' do %>
+            <span>Ver Todos os Produtos</span>
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Stock Movements -->
+  <div class="overflow-hidden rounded-lg bg-white shadow">
+    <div class="px-4 py-5 sm:p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Movimentações Recentes</h3>
+        <%= link_to 'Ver Todas', stock_movements_path, class: 'text-sm font-medium text-indigo-600 hover:text-indigo-500' %>
+      </div>
+      
+      <% if @recent_movements.any? %>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Data</th>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Produto</th>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Tipo</th>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Quantidade</th>
+                <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Usuário</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <% @recent_movements.each do |movement| %>
+                <tr class="hover:bg-gray-50">
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <%= l(movement.movement_date, format: :short) %>
+                  </td>
+                  <td class="px-3 py-4 text-sm text-gray-900">
+                    <%= link_to movement.product.name, product_path(movement.product), class: 'text-indigo-600 hover:text-indigo-900' %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm">
+                    <% 
+                      badge_class = case movement.movement_type
+                      when 'entry'
+                        'bg-green-100 text-green-800'
+                      when 'exit'
+                        'bg-red-100 text-red-800'
+                      when 'adjustment'
+                        'bg-yellow-100 text-yellow-800'
+                      when 'return'
+                        'bg-blue-100 text-blue-800'
+                      end
+                    %>
+                    <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 <%= badge_class %>">
+                      <%= movement.movement_type.humanize %>
+                    </span>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                    <%= movement.quantity %>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <%= movement.user.name %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-500 text-center py-4">Nenhuma movimentação registrada ainda.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
