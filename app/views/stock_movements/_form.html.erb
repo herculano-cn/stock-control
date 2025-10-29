@@ -53,11 +53,11 @@
       </div>
 
       <div>
-        <%= f.input :reference_number,
-                    label: 'Número de Referência',
-                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', placeholder: 'Ex: NF-12345' },
+        <%= f.input :reference_document,
+                    label: 'Reference Number',
+                    input_html: { class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm', placeholder: 'Ex: INV-12345' },
                     wrapper_html: { class: 'space-y-1' },
-                    hint: 'Número da nota fiscal, pedido, etc.' %>
+                    hint: 'Invoice number, order number, etc.' %>
       </div>
 
       <div class="sm:col-span-2">
@@ -67,13 +67,6 @@
                     wrapper_html: { class: 'space-y-1' } %>
       </div>
 
-      <div class="sm:col-span-2">
-        <%= f.input :notes,
-                    label: 'Observações',
-                    as: :text,
-                    input_html: { rows: 3, class: 'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' },
-                    wrapper_html: { class: 'space-y-1' } %>
-      </div>
     </div>
 
     <div class="rounded-md bg-blue-50 p-4">

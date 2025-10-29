@@ -113,7 +113,7 @@
                     <%= movement.quantity %>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <%= movement.unit_price.present? ? number_to_currency(movement.unit_price, unit: 'R$ ', separator: ',', delimiter: '.') : '-' %>
+                    <%= movement.unit_cost.present? ? number_to_currency(movement.unit_cost, unit: 'R$ ', separator: ',', delimiter: '.') : '-' %>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 font-semibold">
                     <%= number_to_currency(movement.total_value || 0, unit: 'R$ ', separator: ',', delimiter: '.') %>
@@ -122,7 +122,7 @@
                     <%= movement.user.name %>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <%= movement.reference_number || '-' %>
+                    <%= movement.reference_document || '-' %>
                   </td>
                 </tr>
               <% end %>

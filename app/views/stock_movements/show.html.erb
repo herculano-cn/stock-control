@@ -85,24 +85,17 @@
           <dd class="mt-1 text-sm text-gray-900"><%= @stock_movement.user.name %></dd>
         </div>
 
-        <% if @stock_movement.reference_number.present? %>
+        <% if @stock_movement.reference_document.present? %>
           <div>
-            <dt class="text-sm font-medium text-gray-500">Número de Referência</dt>
-            <dd class="mt-1 text-sm text-gray-900"><%= @stock_movement.reference_number %></dd>
+            <dt class="text-sm font-medium text-gray-500">Reference Number</dt>
+            <dd class="mt-1 text-sm text-gray-900"><%= @stock_movement.reference_document %></dd>
           </div>
         <% end %>
 
         <% if @stock_movement.reason.present? %>
-          <div class="<%= @stock_movement.reference_number.present? ? '' : 'sm:col-span-2' %>">
+          <div class="<%= @stock_movement.reference_document.present? ? '' : 'sm:col-span-2' %>">
             <dt class="text-sm font-medium text-gray-500">Motivo</dt>
             <dd class="mt-1 text-sm text-gray-900"><%= @stock_movement.reason %></dd>
-          </div>
-        <% end %>
-
-        <% if @stock_movement.notes.present? %>
-          <div class="sm:col-span-2">
-            <dt class="text-sm font-medium text-gray-500">Observações</dt>
-            <dd class="mt-1 text-sm text-gray-900"><%= simple_format(@stock_movement.notes) %></dd>
           </div>
         <% end %>
 

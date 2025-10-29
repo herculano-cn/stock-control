@@ -77,8 +77,8 @@ class StockMovementsController < ApplicationController
   
   def stock_movement_params
     params.require(:stock_movement).permit(
-      :product_id, :movement_type, :quantity, :unit_price,
-      :reason, :notes, :reference_number, :movement_date
+      :product_id, :movement_type, :quantity, :unit_cost,
+      :reason, :reference_document, :movement_date
     )
   end
   
@@ -99,7 +99,7 @@ class StockMovementsController < ApplicationController
           movement.total_value,
           movement.reason,
           movement.user.name,
-          movement.reference_number
+          movement.reference_document
         ]
       end
     end
