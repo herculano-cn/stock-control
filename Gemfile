@@ -92,7 +92,7 @@ group :development do
   gem "annotate", "~> 3.2"
 
   # Performance profiling
-  gem "rack-mini-profiler", "~> 3.3"
+  gem "rack-mini-profiler", "~> 4.0"
 end
 
 group :test do
