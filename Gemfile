@@ -105,6 +105,6 @@ end
 
 group :production do
   # Error tracking
-  gem "sentry-ruby", "~> 5.16"
-  gem "sentry-rails", "~> 5.16"
+  gem "sentry-ruby", "~> 6.0"
+  gem "sentry-rails", "~> 6.0"
 end
