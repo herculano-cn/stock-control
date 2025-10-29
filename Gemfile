@@ -75,7 +75,7 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.4"
   gem "faker", "~> 3.2"
   gem "pry-rails", "~> 0.3"
-  gem "bullet", "~> 7.1"
+  gem "bullet", "~> 8.1"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
