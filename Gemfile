@@ -52,7 +52,7 @@ gem "paper_trail"  # Auditoria
 
 # Cache e Background Jobs
 gem "redis", "~> 5.0"
-gem "sidekiq", "~> 7.2"
+gem "sidekiq", "~> 8.0"
 
 # Segurança
 gem "rack-attack"
