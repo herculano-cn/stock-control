@@ -39,7 +39,7 @@ gem "ransack", "~> 4.0"
 # Relatórios e Exportação
 gem "prawn", "~> 2.4"
 gem "prawn-table", "~> 0.2"
-gem "caxlsx", "~> 3.4"
+gem "caxlsx", "~> 4.4"
 gem "caxlsx_rails", "~> 0.6"
 
 # Gráficos
