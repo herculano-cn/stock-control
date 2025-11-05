@@ -158,7 +158,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.8.1)
-    irb (1.15.2)
+    irb (1.15.3)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
@@ -264,7 +264,7 @@ GEM
     pundit (2.5.2)
       activesupport (>= 3.0.0)
     racc (1.8.1)
-    rack (3.2.3)
+    rack (3.2.4)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
     rack-mini-profiler (3.3.1)
@@ -313,7 +313,7 @@ GEM
       activerecord (>= 7.2)
       activesupport (>= 7.2)
       i18n
-    rdoc (6.15.0)
+    rdoc (6.15.1)
       erb
       psych (>= 4.0.0)
       tsort
@@ -376,10 +376,10 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
-    sentry-rails (5.28.1)
-      railties (>= 5.0)
-      sentry-ruby (~> 5.28.1)
-    sentry-ruby (5.28.1)
+    sentry-rails (6.1.0)
+      railties (>= 5.2.0)
+      sentry-ruby (~> 6.1.0)
+    sentry-ruby (6.1.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (6.5.0)
@@ -498,8 +498,8 @@ DEPENDENCIES
   rspec-rails (~> 6.1)
   rubocop-rails (~> 2.23)
   selenium-webdriver
-  sentry-rails (~> 5.16)
-  sentry-ruby (~> 5.16)
+  sentry-rails (~> 6.1)
+  sentry-ruby (~> 6.1)
   shoulda-matchers (~> 6.0)
   sidekiq (~> 7.2)
   simple_form (~> 5.3)
