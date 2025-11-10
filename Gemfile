@@ -23,7 +23,7 @@ gem "jbuilder"
 gem "hotwire-rails", "~> 0.1"
 
 # UI/CSS
-gem "tailwindcss-rails", "~> 2.0"
+gem "tailwindcss-rails", "~> 4.4"
 
 # Autenticação e Autorização
 gem "devise", "~> 4.9"
